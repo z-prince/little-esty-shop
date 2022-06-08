@@ -1,15 +1,12 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get '/admin', to: 'admins#dashboard'
-
-  resources :admin_merchants, except: [:destroy]
-  # get '/admin/merchants', to: 'admin_merchants#index'
-  # patch '/admin/merchants/:id', to: 'admin_merchants#update'
-  # get '/admin/merchants/new', to: 'admin_merchants#new'
-  # get '/admin/merchants/:id', to: 'admin_merchants#show'
-  # get '/admin/merchants/:id/edit', to: 'admin_merchants#edit'
-  # post '/admin/merchants', to: 'admin_merchants#create'
-
+  get '/admin/merchants', to: 'admin_merchants#index'
+  patch '/admin/merchants/:id', to: 'admin_merchants#update'
+  get '/admin/merchants/new', to: 'admin_merchants#new'
+  get '/admin/merchants/:id', to: 'admin_merchants#show'
+  get '/admin/merchants/:id/edit', to: 'admin_merchants#edit'
+  post '/admin/merchants', to: 'admin_merchants#create'
   get '/admin/invoices', to: 'admin_invoices#index'
   get '/admin/invoices/:id', to: 'admin_invoices#show'
   patch '/admin/invoices/:id', to: 'admin_invoices#update'
@@ -26,4 +23,6 @@ Rails.application.routes.draw do
   get '/merchants/:id/items/:item_id/edit', to: 'merchant_items#edit'
   patch '/merchants/:id/items/:item_id', to: 'merchant_items#update'
 
+  get '/admin/merchants', to: 'admin_merchants#index'
+  patch '/admin/merchants', to: 'admin_merchants#update'
 end
