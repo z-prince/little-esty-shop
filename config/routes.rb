@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get '/admin', to: 'admins#dashboard'
 
   resources :admin_merchants, except: [:destroy]
+
   # get '/admin/merchants', to: 'admin_merchants#index'
   # patch '/admin/merchants/:id', to: 'admin_merchants#update'
   # get '/admin/merchants/new', to: 'admin_merchants#new'
