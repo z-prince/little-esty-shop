@@ -31,7 +31,7 @@ RSpec.describe 'admin dashboard' do
     visit '/admin'
 
     click_link('Admin Merchants Index')
-    expect(current_path).to eq('/admin/merchants')
+    expect(current_path).to eq(admin_merchants_path)
 
     visit '/admin'
 
