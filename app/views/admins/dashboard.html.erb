@@ -1,4 +1,4 @@
-<%= link_to "Admin Merchants Index", "/admin/merchants" %>
+<%= link_to "Admin Merchants Index", admin_merchants_path %>
 <%= link_to "Admin Invoices Index", "/admin/invoices" %><br>
 
 <h1>Admin Dashboard</h1>
@@ -21,4 +21,3 @@ Incomplete Invoices:
 <% @invoices.incomplete.each do |invoice| %>
   <%= link_to "#{invoice.id}", "/admin/invoices/#{invoice.id}" %> Created at: <%= invoice.created_at.strftime('%A %B %e %Y')%><br>
 <% end %>
-
