@@ -10,7 +10,7 @@ RSpec.describe "Admin Merchant Index" do
 
     describe "Admin Merchant Index" do
         it "displays the name of all merchants in the system" do
-            visit "/admin/merchants"
+            visit admin_merchants_path
             expect(page).to have_content("Floopy Fopperations")
             expect(page).to have_content("A-Team")
             expect(page).to have_content("Blue Clues")
@@ -49,7 +49,7 @@ RSpec.describe "Admin Merchant Index" do
             InvoiceItem.create!(item_id: @item8.id, invoice_id: @invoice3.id, quantity: 1000, unit_price: 10000, status: 2)
             InvoiceItem.create!(item_id: @item9.id, invoice_id: @invoice1.id, quantity: 10, unit_price: 20000, status: 2)
 
-            visit "/admin/merchants"
+            visit admin_merchants_path
 
             #making the assumption that the only "check" we are doing is if the transaction wsa successful to count towards revenue (invoice item status does not matter)
 
@@ -69,29 +69,29 @@ RSpec.describe "Admin Merchant Index" do
               click_link(@merch1.name)
             end
 
-            expect(current_path).to eq("/admin/merchants/#{@merch1.id}")
+            expect(current_path).to eq(admin_merchant_path(@merch1))
             expect(page).to have_content(@merch1.name)
             expect(page).to_not have_content(@merch2.name)
         end
 
         it 'can create a new merchant and show its status' do
 
-          visit "/admin/merchants"
+          visit admin_merchants_path
           click_link "Create a New Merchant"
 
-          expect(current_path).to eq("/admin/merchants/new")
+          expect(current_path).to eq(new_admin_merchant_path)
 
           fill_in "Name", with: "Zachary's Coffee Grounds"
           click_on "Submit"
 
-          expect(current_path).to eq("/admin/merchants")
+          expect(current_path).to eq(admin_merchants_path)
           expect(page).to have_content("Zachary's Coffee Grounds")
           expect(page).to have_content("disabled")
         end
 
 
         it 'shows the enabled and disabled merchants' do
-          visit "/admin/merchants"
+          visit admin_merchants_path
 
           expect(page).to have_content("Enabled Merchants:")
           expect(page).to have_content("Disabled Merchants:")
@@ -106,13 +106,13 @@ RSpec.describe "Admin Merchant Index" do
         end
 
         it "has a button to enable/diable mechant next to each name" do
-            visit "/admin/merchants"
+            visit admin_merchants_path
             within "#merchant-#{@merch1.id}" do
                 expect(page).to have_content("Floopy Fopperations")
                 expect(page).to have_content("Status: enabled")
                 expect(page).to_not have_content("Status: disabled")
                 click_button "Disable"
-                expect(current_path).to eq("/admin/merchants")
+                expect(current_path).to eq(admin_merchants_path)
                 expect(page).to have_content("Status: disabled")
                 expect(page).to_not have_content("Status: enabled")
             end
@@ -122,11 +122,11 @@ RSpec.describe "Admin Merchant Index" do
                 expect(page).to have_content("Status: enabled")
                 expect(page).to_not have_content("Status: disabled")
                 click_button "Disable"
-                expect(current_path).to eq("/admin/merchants")
+                expect(current_path).to eq(admin_merchants_path)
                 expect(page).to have_content("Status: disabled")
                 expect(page).to_not have_content("Status: enabled")
                 click_button "Enable"
-                expect(current_path).to eq("/admin/merchants")
+                expect(current_path).to eq(admin_merchants_path)
                 expect(page).to have_content("Status: enabled")
                 expect(page).to_not have_content("Status: disabled")
             end
@@ -162,14 +162,8 @@ RSpec.describe "Admin Merchant Index" do
           InvoiceItem.create!(item_id: @item7.id, invoice_id: @invoice1.id, quantity: 1, unit_price: 500, status: 2)
           InvoiceItem.create!(item_id: @item8.id, invoice_id: @invoice3.id, quantity: 1000, unit_price: 10000, status: 2)
           InvoiceItem.create!(item_id: @item9.id, invoice_id: @invoice1.id, quantity: 10, unit_price: 20000, status: 2)
-          # As an admin,
-          # When I visit the admin merchants index
-          # Then next to each of the 5 merchants by revenue I see the date with the most revenue for each merchant.
-          # And I see a label “Top selling date for was "
-          #
-          # Note: use the invoice date. If there are multiple days with equal number of sales, return the most recent day.
 
-          visit "/admin/merchants"
+          visit admin_merchants_path
 
           expect(page).to have_content("Top selling date for us was:")
           expect(page).to have_content("March 30, 2012")
