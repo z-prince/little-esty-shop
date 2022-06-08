@@ -1,2 +1,2 @@
 <h1>Edit <%= @merchant.name %></h1>
-<%= render partial: "form", locals: { path: "/admin/merchants/#{@merchant.id}", method: :patch, button_text: "Save" } %>
+<%= render partial: "form", locals: { path: admin_merchant_path(@merchant), method: :patch, button_text: "Save" } %>
