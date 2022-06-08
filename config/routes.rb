@@ -1,12 +1,9 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get '/admin', to: 'admins#dashboard'
-  get '/admin/merchants', to: 'admin_merchants#index'
-  patch '/admin/merchants/:id', to: 'admin_merchants#update'
-  get '/admin/merchants/new', to: 'admin_merchants#new'
-  get '/admin/merchants/:id', to: 'admin_merchants#show'
-  get '/admin/merchants/:id/edit', to: 'admin_merchants#edit'
-  post '/admin/merchants', to: 'admin_merchants#create'
+
+  resources :admin_merchants, except: [:destroy]
+
   get '/admin/invoices', to: 'admin_invoices#index'
   get '/admin/invoices/:id', to: 'admin_invoices#show'
   patch '/admin/invoices/:id', to: 'admin_invoices#update'
