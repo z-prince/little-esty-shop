@@ -1,2 +1,6 @@
 <h1>Edit <%= @merchant.name %></h1>
-<%= render partial: "form", locals: { path: admin_merchant_path(@merchant), method: :patch, button_text: "Save" } %>
+<%= form_with url: "/admin/merchants/#{@merchant.id}", method: :patch, local: true do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <%= f.submit %>
+<% end %>

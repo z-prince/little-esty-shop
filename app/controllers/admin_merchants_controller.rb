@@ -14,17 +14,17 @@ class AdminMerchantsController < ApplicationController
   def update
     if params[:merchant_id]
       merch = Merchant.find(params[:merchant_id])
-      if merch.status == "disabled"
+      if merch.status == "disabled" 
         merch.status = "enabled"
-      else
+      else 
         merch.status = "disabled"
       end
       merch.save
-      redirect_to admin_merchants_path
+      redirect_to "/admin/merchants"
     else
       merch = Merchant.find(merch_params[:id])
       merch.update(merch_params)
-      redirect_to admin_merchant_path(merch)
+      redirect_to "/admin/merchants/#{merch.id}"
       flash[:message] = 'Merchant has been successfully updated!'
     end
   end
@@ -35,7 +35,7 @@ class AdminMerchantsController < ApplicationController
 
   def create
     merchant = Merchant.create!(merch_params)
-    redirect_to admin_merchants_path
+    redirect_to "/admin/merchants"
   end
 
   private
