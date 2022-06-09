@@ -183,4 +183,12 @@ RSpec.describe 'merchants dashboard' do
 
     expect(page).to have_content('Deming-Matt')
   end
+
+  it 'links to bulk discounts index' do
+    visit "/merchants/#{@merch1.id}/dashboard"
+
+    click_link('All Discounts')
+
+    expect(current_path).to eq("/merchants/#{@merch1.id}/bulk_discounts")
+  end
 end
