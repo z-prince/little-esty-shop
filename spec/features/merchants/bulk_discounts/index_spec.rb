@@ -77,7 +77,6 @@ RSpec.describe 'bulk_discounts index' do
   end
   it 'lists all discounts and their percantage / quantity with a link to the show page' do
     visit "/merchants/#{@merch1.id}/bulk_discounts"
-
     expect(page).to have_content('Percentage Discount: 20')
 
     expect(page).to have_content('Percentage Discount: 30')
