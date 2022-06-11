@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'bulk_discounts index' do
   before :each do
     @merch1 = Merchant.create!(name: 'Floopy Fopperations')
+    @merch2 = Merchant.create!(name: 'Goopy Gopperations')
     @item1 = @merch1.items.create!(name: 'Floopy Original', description: 'the best', unit_price: 450)
     @item2 = @merch1.items.create!(name: 'A-Team Original', description: 'the better', unit_price: 950)
 
@@ -74,6 +75,7 @@ RSpec.describe 'bulk_discounts index' do
     @bd1 = @merch1.bulk_discounts.create!(percentage_discount: 20, quantity: 30)
     @bd2 = @merch1.bulk_discounts.create!(percentage_discount: 30, quantity: 50)
     @bd3 = @merch1.bulk_discounts.create!(percentage_discount: 70, quantity: 90)
+    @bd3 = @merch2.bulk_discounts.create!(percentage_discount: 69, quantity: 28)
   end
   it 'lists all discounts and their percantage / quantity with a link to the show page' do
     visit "/merchants/#{@merch1.id}/bulk_discounts"
@@ -83,10 +85,34 @@ RSpec.describe 'bulk_discounts index' do
 
     expect(page).to have_content('Percentage Discount: 70')
 
+    expect(page).to_not have_content('Percentage Discount: 69')
+
     expect(page).to have_content('Quantity: 30')
 
     expect(page).to have_content('Quantity: 50')
 
     expect(page).to have_content('Quantity: 90')
+
+    expect(page).to have_content('Quantity: 28')
+  end
+
+  it 'can create a bulk discount' do
+    visit "/merchants/#{@merch1.id}/bulk_discounts"
+
+    click_link('Create New Discount')
+
+    expect(current_path).to eq("/merchants/#{@merch1.id}/bulk_discounts/new")
+
+    fill_in(:percentage_discount, with: '38')
+
+    fill_in(:quantity, with: '25')
+
+    click_button('Submit')
+
+    expect(current_path).to eq("/merchants/#{@merch1.id}/bulk_discounts")
+
+    expect(page).to have_content('Percentage Discount: 38')
+
+    expect(page).to have_content('Quantity: 25')
   end
 end
