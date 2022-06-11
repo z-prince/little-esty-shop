@@ -185,6 +185,7 @@ RSpec.describe 'merchants dashboard' do
   end
 
   it 'links to bulk discounts index' do
+    bd1 = @merch1.bulk_discounts.create!(percentage_discount: 20, quantity: 30)
     visit "/merchants/#{@merch1.id}/dashboard"
 
     click_link('All Discounts')
