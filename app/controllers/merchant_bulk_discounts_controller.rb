@@ -8,10 +8,8 @@ class MerchantBulkDiscountsController < ApplicationController
   end
 
   def create
-    require 'pry'
-    binding.pry
     merch = Merchant.find(params[:id])
-    merch.bulk_discount.create!(bulk_dis_params)
+    merch.bulk_discounts.create!(bulk_dis_params)
     redirect_to "/merchants/#{merch.id}/bulk_discounts"
   end
 
