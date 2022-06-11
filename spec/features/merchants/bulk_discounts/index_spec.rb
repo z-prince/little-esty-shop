@@ -93,7 +93,7 @@ RSpec.describe 'bulk_discounts index' do
 
     expect(page).to have_content('Quantity: 90')
 
-    expect(page).to have_content('Quantity: 28')
+    expect(page).to_not have_content('Quantity: 28')
   end
 
   it 'can create a bulk discount' do
