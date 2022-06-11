@@ -1,0 +1,13 @@
+<h2>All Discounts</h2>
+
+<br>
+
+<% @discounts.each do |discount| %>
+  <ul>
+    <li>Percentage Discount: <%= discount.percentage_discount %></li>
+    <li>Quantity: <%= discount.quantity %></li>
+  </ul>
+  <br>
+<% end %>
+
+
