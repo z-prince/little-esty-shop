@@ -78,7 +78,7 @@ RSpec.describe 'bulk_discounts index' do
     @bd3 = @merch2.bulk_discounts.create!(percentage_discount: 69, quantity: 28)
   end
   it 'lists all discounts and their percantage / quantity with a link to the show page' do
-    visit merchant_bulk_discounts_path
+    visit merchant_bulk_discounts_path(merchant_id: @merch1.id)
     expect(page).to have_content('Percentage Discount: 20')
 
     expect(page).to have_content('Percentage Discount: 30')
@@ -97,11 +97,11 @@ RSpec.describe 'bulk_discounts index' do
   end
 
   it 'can create a bulk discount' do
-    visit merchant_bulk_discounts_path
+    visit merchant_bulk_discounts_path(merchant_id: @merch1.id)
 
     click_link('Create New Discount')
 
-    expect(current_path).to eq("/merchants/#{@merch1.id}/merchant_bulk_discounts/new")
+    expect(current_path).to eq(new_merchant_bulk_discount_path(merchant_id: @merch1.id))
 
     fill_in(:percentage_discount, with: '38')
 
@@ -109,7 +109,7 @@ RSpec.describe 'bulk_discounts index' do
 
     click_button('Submit')
 
-    expect(current_path).to eq("/merchants/#{@merch1.id}/merchant_bulk_discounts")
+    expect(current_path).to eq "/merchants/#{@merch1.id}/bulk_discounts"
 
     expect(page).to have_content('Percentage Discount: 38')
 
@@ -117,13 +117,13 @@ RSpec.describe 'bulk_discounts index' do
   end
 
   it 'can delete a discount' do
-    visit merchant_bulk_discounts_path
+    visit merchant_bulk_discounts_path(merchant_id: @merch1.id)
 
     within "#bulkDiscount#{@bd1.id}" do
       click_link('Delete Discount')
     end
 
-    expect(curent_path).to eq "/merchants/#{@merch1.id}/merchant_bulk_discounts"
+    expect(current_path).to eq "/merchants/#{@merch1.id}/bulk_discounts"
 
     expect(page).to_not have_content('Percentage Discount: 20')
 

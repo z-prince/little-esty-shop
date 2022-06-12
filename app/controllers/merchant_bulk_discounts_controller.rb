@@ -1,22 +1,22 @@
 class MerchantBulkDiscountsController < ApplicationController
   def index
-    @discounts = Merchant.find(params[:id]).bulk_discounts
+    @discounts = Merchant.find(params[:merchant_id]).bulk_discounts
   end
 
   def new
-    @merchant = Merchant.find(params[:id])
+    @merchant = Merchant.find(params[:merchant_id])
   end
 
   def create
-    merch = Merchant.find(params[:id])
+    merch = Merchant.find(params[:merchant_id])
     merch.bulk_discounts.create!(bulk_dis_params)
-    redirect_to "/merchants/#{merch.id}/bulk_discounts"
+    redirect_to merchant_bulk_discounts_path
   end
 
   def destroy
-    merch = Merchant.find(params[:id])
-    merch.bulk_discounts.destroy!(bulk_dis_params)
-    redirect_to "/merchants/#{merch.id}/bulk_discounts"
+    merch = Merchant.find(params[:merchant_id])
+    merch.bulk_discounts.find(params[:id]).destroy
+    redirect_to merchant_bulk_discounts_path
   end
 
   private

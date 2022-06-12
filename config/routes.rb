@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   patch '/admin/invoices/:id', to: 'admin_invoices#update'
 
   resources :merchants, except: %i[destroy create] do
-    resources :merchant_bulk_discounts, only: %i[index new show create destroy]
+    resources :bulk_discounts, controller: :merchant_bulk_discounts, only: %i[index new show create destroy]
   end
 
   # resources :merchants, module: :bulk_discounts, as: :merchant_bulk_discounts
