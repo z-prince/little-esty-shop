@@ -77,6 +77,7 @@ RSpec.describe 'merchant_bulk_discounts show page' do
     @bd3 = @merch1.bulk_discounts.create!(percentage_discount: 70, quantity: 90)
     @bd3 = @merch2.bulk_discounts.create!(percentage_discount: 69, quantity: 28)
   end
+
   it 'shows the bulk discount quantity and precentage discount' do
     visit "/merchants/#{@merch1.id}/bulk_discounts/#{@bd1.id}"
 
@@ -87,5 +88,29 @@ RSpec.describe 'merchant_bulk_discounts show page' do
     expect(page).to have_content('Quantity: 30')
 
     expect(page).to_not have_content('Quantity: 50')
+  end
+
+  it 'allows you to edit discount' do
+    visit "/merchants/#{@merch1.id}/bulk_discounts/#{@bd1.id}"
+
+    expect(page).to have_content('Percentage Discount: 20')
+
+    expect(page).to have_content('Quantity: 30')
+
+    fill_in('Percentage Discount:', with: 67)
+
+    fill_in('Quantity:', with: 40)
+
+    click_button('Save')
+
+    expect(current_path).to eq "/merchants/#{@merch1.id}/bulk_discounts/#{@bd1.id}"
+
+    expect(page).to have_content('Percentage Discount: 67')
+
+    expect(page).to have_content('Quantity: 40')
+
+    expect(page).to_not have_content('Percentage Discount: 20')
+
+    expect(page).to_not have_content('Quantity: 30')
   end
 end
