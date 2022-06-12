@@ -128,5 +128,13 @@ RSpec.describe 'bulk_discounts index' do
     expect(page).to_not have_content('Percentage Discount: 20')
 
     expect(page).to_not have_content('Quantity: 30')
+
+    expect(page).to have_content('Percentage Discount: 30')
+
+    expect(page).to have_content('Percentage Discount: 70')
+
+    expect(page).to have_content('Quantity: 50')
+
+    expect(page).to have_content('Quantity: 90')
   end
 end
