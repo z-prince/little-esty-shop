@@ -119,7 +119,7 @@ RSpec.describe 'bulk_discounts index' do
   it 'can delete a discount' do
     visit "/merchants/#{@merch1.id}/bulk_discounts"
 
-    within "bulkDiscount#{@bd1.id}" do
+    within "#bulkDiscount#{@bd1.id}" do
       click_link('Delete Discount')
     end
 
