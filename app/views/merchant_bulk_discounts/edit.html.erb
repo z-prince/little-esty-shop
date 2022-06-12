@@ -1,0 +1,11 @@
+<h2>Edit <%= @discount.percentage_discount %>% Discount for <%= @discount.quantity %> Items</h2>
+
+<br>
+
+<%= form_with url: merchant_bulk_discounts_path, method: :patch, local: true do |form| %>
+  <%= form.label :percentage_discount %>
+  <%= form.text_field "#{@discount.percentage_discount}" %>
+  <%= form.label :quantity %>
+  <%= form.text_field "#{@discount.quantity}" %>
+  <%= form.submit "Save" %>
+<% end %>
