@@ -8,7 +8,7 @@
       <li>Percentage Discount: <%= discount.percentage_discount %></li>
       <li>Quantity: <%= discount.quantity %></li>
       <li><%= link_to 'Delete Discount',  merchant_bulk_discount_path(merchant_id: discount.merchant.id, id: discount.id), method: :delete %></li>
-      <li><%= link_to 'Discount Show Page',  merchant_bulk_discount_path(merchant_id: discount.merchant.id, id: discount.id), method: :show %></li>
+      <li><%= link_to 'Discount Show Page',  merchant_bulk_discount_path(merchant_id: discount.merchant.id, id: discount.id) %></li>
     </ul>
   </div>
 <br>
