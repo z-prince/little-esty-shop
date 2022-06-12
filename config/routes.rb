@@ -15,10 +15,16 @@ Rails.application.routes.draw do
   get '/admin/invoices/:id', to: 'admin_invoices#show'
   patch '/admin/invoices/:id', to: 'admin_invoices#update'
 
-  get '/merchants/:id/bulk_discounts/new', to: 'merchant_bulk_discounts#new'
-  get '/merchants/:id/bulk_discounts', to: 'merchant_bulk_discounts#index'
-  post '/merchants/:id/bulk_discounts', to: 'merchant_bulk_discounts#create'
-  delete '/merchants/:id/bulk_discounts/:id', to: 'merchant_bulk_discounts#destroy'
+  resources :merchants, except: %i[destroy create] do
+    resources :merchant_bulk_discounts, only: %i[index new show create destroy]
+  end
+
+  # resources :merchants, module: :bulk_discounts, as: :merchant_bulk_discounts
+
+  # get '/merchants/:id/bulk_discounts/new', to: 'merchant_bulk_discounts#new'
+  # get '/merchants/:id/bulk_discounts', to: 'merchant_bulk_discounts#index'
+  # post '/merchants/:id/bulk_discounts', to: 'merchant_bulk_discounts#create'
+  # delete '/merchants/:id/bulk_discounts/:id', to: 'merchant_bulk_discounts#destroy'
 
   get '/merchants/:id/dashboard', to: 'merchants#dashboard'
   get '/merchants/:id/invoices', to: 'merchant_invoices#index'
