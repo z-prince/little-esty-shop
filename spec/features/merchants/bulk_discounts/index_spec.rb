@@ -96,9 +96,25 @@ RSpec.describe 'bulk_discounts index' do
     expect(page).to_not have_content('Quantity: 28')
   end
 
-  it 'can create a bulk discount' do
+  it 'links to each discount show page' do
     visit merchant_bulk_discounts_path(merchant_id: @merch1.id)
 
+    within "#bulkDiscount#{@bd1.id}" do
+      click_link('Discount Show Page')
+    end
+
+    expect(current_path).to eq "/merchants/#{@merch1.id}/bulk_discounts/#{@bd1.id}"
+    expect(page).to have_content('Percentage Discount: 20')
+
+    expect(page).to_not have_content('Percentage Discount: 30')
+
+    expect(page).to have_content('Quantity: 30')
+
+    expect(page).to_not have_content('Quantity: 50')
+  end
+
+  it 'can create a bulk discount' do
+    visit merchant_bulk_discounts_path(merchant_id: @merch1.id)
     click_link('Create New Discount')
 
     expect(current_path).to eq(new_merchant_bulk_discount_path(merchant_id: @merch1.id))
