@@ -78,7 +78,7 @@ RSpec.describe 'merchant_bulk_discounts show page' do
     @bd3 = @merch2.bulk_discounts.create!(percentage_discount: 69, quantity: 28)
   end
   it 'shows the bulk discount quantity and precentage discount' do
-    visit merchant_bulk_discounts(id: @bd1)
+    visit show_merchant_bulk_discounts_path(merchant_id: @merch1.id, id: @bd1)
 
     expect(page).to have_content('Percentage Discount: 20')
 
