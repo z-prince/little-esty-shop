@@ -5,7 +5,7 @@ class CreateBulkDiscounts < ActiveRecord::Migration[5.2]
       t.integer :quantity
       t.references :merchant, foreign_key: true
 
-      t.timesatamps
+      t.timestamps
     end
   end
 end
