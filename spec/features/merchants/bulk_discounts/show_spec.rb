@@ -93,24 +93,30 @@ RSpec.describe 'merchant_bulk_discounts show page' do
   it 'allows you to edit discount' do
     visit "/merchants/#{@merch1.id}/bulk_discounts/#{@bd1.id}"
 
-    expect(page).to have_content('Percentage Discount: 20')
+    click_link('Edit Discount')
 
-    expect(page).to have_content('Quantity: 30')
+    expect(page).to have_content('Percentage discount')
 
-    fill_in('Percentage Discount:', with: 67)
+    expect(page).to have_content('20')
 
-    fill_in('Quantity:', with: 40)
+    expect(page).to have_content('Quantity')
+
+    expect(page).to have_content('30')
+
+    fill_in('Percentage discount', with: '67')
+
+    fill_in('Quantity', with: '40')
 
     click_button('Save')
 
     expect(current_path).to eq "/merchants/#{@merch1.id}/bulk_discounts/#{@bd1.id}"
 
-    expect(page).to have_content('Percentage Discount: 67')
+    expect(page).to have_content('67')
 
-    expect(page).to have_content('Quantity: 40')
+    expect(page).to have_content('40')
 
-    expect(page).to_not have_content('Percentage Discount: 20')
+    expect(page).to_not have_content('20')
 
-    expect(page).to_not have_content('Quantity: 30')
+    expect(page).to_not have_content('30')
   end
 end
