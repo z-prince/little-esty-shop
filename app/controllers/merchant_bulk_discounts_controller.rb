@@ -13,7 +13,8 @@ class MerchantBulkDiscountsController < ApplicationController
 
   def create
     merch = Merchant.find(params[:merchant_id])
-    merch.bulk_discounts.create!(bulk_dis_params)
+    merch.bulk_discounts.create!(percentage_discount: params[:percentage_discount],
+                                 quantity: params[:quantity], merchant_id: params[:merchant_id])
     redirect_to merchant_bulk_discounts_path
   end
 
@@ -30,12 +31,19 @@ class MerchantBulkDiscountsController < ApplicationController
   def update
     discount = Merchant.find(params[:merchant_id]).bulk_discounts.find(params[:id])
     discount.update(bulk_dis_params)
-    redirect_to merchant_bulk_discounts_path(merchant_id: discount.merchant.id, id: discount.id)
+    redirect_to merchant_bulk_discount_path(merchant_id: discount.merchant.id, id: discount.id)
   end
+
+  # def update
+  #   discount = BulkDiscount.find(params[:id])
+  #   merchant = discount.merchant
+  #   discount.update(bulk_discount_params)
+  #   redirect_to merchant_bulk_discount_path(merchant, discount)
+  # end
 
   private
 
   def bulk_dis_params
-    params.permit(:percentage_discount, :quantity)
+    params.permit(:percentage_discount, :quantity, :merchant_id)
   end
 end
