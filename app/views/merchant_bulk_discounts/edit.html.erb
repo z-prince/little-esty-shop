@@ -2,10 +2,10 @@
 
 <br>
 
-<%= form_with url: merchant_bulk_discounts_path, method: :patch, local: true do |form| %>
+<%= form_with url: merchant_bulk_discount_path(id: @discount.id, merchant_id: @discount.merchant.id), method: :patch, local: true do |form| %>
   <%= form.label :percentage_discount %>
-  <%= form.text_field "#{@discount.percentage_discount}" %>
+  <%= form.text_field :percentage_discount, value: @discount.percentage_discount %>
   <%= form.label :quantity %>
-  <%= form.text_field "#{@discount.quantity}" %>
+  <%= form.text_field :quantity, value: @discount.quantity %>
   <%= form.submit "Save" %>
 <% end %>
