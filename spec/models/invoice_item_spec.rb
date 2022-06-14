@@ -25,7 +25,6 @@ RSpec.describe InvoiceItem do
       @invoice1.transactions.create!(result: 0)
       @invoice2 = @customer1.invoices.create!(status: 2)
       @invoice2.transactions.create!(result: 0)
-      InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice1.id, quantity: 1, unit_price: 10_000, status: 0)
       InvoiceItem.create!(item_id: @item2.id, invoice_id: @invoice2.id, quantity: 2, unit_price: 10_000, status: 1)
       InvoiceItem.create!(item_id: @item3.id, invoice_id: @invoice1.id, quantity: 3, unit_price: 10_000, status: 1)
       InvoiceItem.create!(item_id: @item4.id, invoice_id: @invoice2.id, quantity: 4, unit_price: 10_000, status: 2)
@@ -44,6 +43,16 @@ RSpec.describe InvoiceItem do
         expect(@item8.invoice_items.item_revenue).to eq(100_000)
       end
     end
+
+    describe '#best_discount' do
+      it 'finds the best discount for the item' do
+        InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice1.id, quantity: 30, unit_price: 10_000, status: 0)
+        bd1 = @merch1.bulk_discounts.create(percentage_discount: 10, quantity: 20)
+        bd2 = @merch1.bulk_discounts.create(percentage_discount: 20, quantity: 30)
+        bd3 = @merch1.bulk_discounts.create(percentage_discount: 30, quantity: 40)
+
+        expect(@item8.invoice_items.last.best_discount).to eq(bd2)
+      end
+    end
   end
 end
-
