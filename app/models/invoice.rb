@@ -36,4 +36,8 @@ class Invoice < ApplicationRecord
   def invoice_revenue
     invoice_items.joins(:item).sum('invoice_items.unit_price * invoice_items.quantity')
   end
+
+  def invoice_discounted_revenue
+    invoice_items.joins(:item).sum(&:discounted_revenue).to_i
+  end
 end
