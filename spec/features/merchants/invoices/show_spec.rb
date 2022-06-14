@@ -44,7 +44,7 @@ RSpec.describe 'Merchant Invoice Show Page' do
 
     it 'shows the total revenue from all items on invoice' do
       visit "/merchants/#{@merch1.id}/invoices/#{@invoice1.id}"
-
+      save_and_open_page
       expect(page).to have_content('Total Revenue: 58000')
     end
 
@@ -66,11 +66,12 @@ RSpec.describe 'Merchant Invoice Show Page' do
       @merch1.bulk_discounts.create(percentage_discount: 5, quantity: 10)
 
       visit "/merchants/#{@merch1.id}/invoices/#{@invoice1.id}"
+      save_and_open_page
       # 12_350
       # 36_800
       # 54_150
       # -3850
-      expect(page).to have_content('Total Discounted Revenue: 3850')
+      expect(page).to have_content('Total Discounted Revenue: 54150')
     end
   end
 end
