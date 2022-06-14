@@ -67,5 +67,26 @@ RSpec.describe 'Merchant Invoice Show Page' do
       visit "/merchants/#{@merch1.id}/invoices/#{@invoice1.id}"
       expect(page).to have_content('Total Discounted Revenue: 54150')
     end
+
+    it 'shows a link to the bulk discount show page for each eligible item' do
+      bd1 = @merch1.bulk_discounts.create(percentage_discount: 8, quantity: 20)
+      bd2 = @merch1.bulk_discounts.create(percentage_discount: 5, quantity: 10)
+
+      visit "/merchants/#{@merch1.id}/invoices/#{@invoice1.id}"
+
+      within "#invoice-item-#{@item2.id}" do
+        click_link('5% Discount')
+      end
+
+      expect(current_path).to eq merchant_bulk_discount_path(merchant_id: @merch1.id, id: bd2.id)
+
+      visit "/merchants/#{@merch1.id}/invoices/#{@invoice1.id}"
+
+      within "#invoice-item-#{@item3.id}" do
+        click_link('8% Discount')
+      end
+
+      expect(current_path).to eq merchant_bulk_discount_path(merchant_id: @merch1.id, id: bd1.id)
+    end
   end
 end
