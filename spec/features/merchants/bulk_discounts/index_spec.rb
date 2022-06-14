@@ -155,20 +155,22 @@ RSpec.describe 'bulk_discounts index' do
   end
 
   it 'shows the next 3 holidays' do
+    @holidays = HolidayFacade.new
+
     visit merchant_bulk_discounts_path(merchant_id: @merch1.id)
 
     within '#nextThreeHolidays' do
-      expect(page).to have_content(@next_three_holidays[0].name)
+      expect(page).to have_content(@holidays.next_three_holidays[0].name)
 
-      expect(page).to have_content(@next_three_holidays[0].date)
+      expect(page).to have_content(@holidays.next_three_holidays[0].date)
 
-      expect(page).to have_content(@next_three_holidays[1].name)
+      expect(page).to have_content(@holidays.next_three_holidays[1].name)
 
-      expect(page).to have_content(@next_three_holidays[1].date)
+      expect(page).to have_content(@holidays.next_three_holidays[1].date)
 
-      expect(page).to have_content(@next_three_holidays[2].name)
+      expect(page).to have_content(@holidays.next_three_holidays[2].name)
 
-      expect(page).to have_content(@next_three_holidays[2].date)
+      expect(page).to have_content(@holidays.next_three_holidays[2].date)
     end
   end
 end
