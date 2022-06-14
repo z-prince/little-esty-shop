@@ -40,12 +40,14 @@ RSpec.describe Invoice do
 
     describe '#invoice_total_discounted_revenue(merch_id)' do
       it 'calculates total discounted revenue of an invoice' do
-        InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice1.id, quantity: 30, unit_price: 10_000, status: 0)
+        InvoiceItem.create!(item_id: @item1.id, invoice_id: @inv1.id, quantity: 30, unit_price: 10_000, status: 0)
         bd1 = @merch1.bulk_discounts.create(percentage_discount: 10, quantity: 20)
         bd2 = @merch1.bulk_discounts.create(percentage_discount: 20, quantity: 30)
         bd3 = @merch1.bulk_discounts.create(percentage_discount: 30, quantity: 40)
 
-        expect(@inv1.total_discounted_revenue(@merch1.id)).to eq(500_000)
+        expect(@inv1.total_revenue(@merch1.id)).to eq(800_000)
+
+        expect(@inv1.total_discounted_revenue(@merch1.id)).to eq(590_000)
       end
     end
 
