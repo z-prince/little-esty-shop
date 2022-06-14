@@ -18,4 +18,8 @@ class InvoiceItem < ApplicationRecord
                   .order(percentage_discount: :desc)
                   .first
   end
+
+  def discounted_revenue
+    (1 - best_discount.percentage_discount.to_f / 100) * (quantity * unit_price)
+  end
 end
