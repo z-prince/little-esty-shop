@@ -7,6 +7,9 @@
         <p>Quantity: <%= invoice_item.quantity %></p>
         <p>Unit Price: <%= invoice_item.unit_price %></p>
         <p>Status: <%= invoice_item.status %> </p>
+        <% if invoice_item.best_discount %>
+            <p><%= link_to "#{invoice_item.best_discount.percentage_discount}% Discount", merchant_bulk_discount_path(merchant_id: @merchant.id, id: invoice_item.best_discount.id) %></p>
+        <% end %>
         <%= form_with url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}?invoice_item_id=#{invoice_item.id}", method: :patch, local: true do |f| %>
           <%= f.label "New Status" %>
           <%= f.select :status, ["pending", "packaged", "shipped"], selected: invoice_item.status %>
