@@ -10,4 +10,12 @@ class InvoiceItem < ApplicationRecord
   def self.item_revenue
     sum('quantity * unit_price')
   end
+
+  def best_discount
+    bulk_discounts.where("#{quantity} >= quantity")
+                  .select('bulk_discounts.*')
+                  .group('bulk_discounts.id, merchants.id, items.id')
+                  .order(percentage_discount: :desc)
+                  .first
+  end
 end
