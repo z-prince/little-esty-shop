@@ -19,6 +19,12 @@ class Invoice < ApplicationRecord
                  .sum('invoice_items.unit_price * invoice_items.quantity')
   end
 
+  def total_discounted_revenue(merchant_id)
+    invoice_items.joins(item: :merchant)
+                 .where(merchants: { id: merchant_id })
+                 .sum(&:discounted_revenue).to_i
+  end
+
   def self.incomplete
     joins(:invoice_items)
       .where.not(invoice_items: { status: 2 })
