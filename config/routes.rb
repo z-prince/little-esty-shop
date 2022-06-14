@@ -15,10 +15,6 @@ Rails.application.routes.draw do
   get '/admin/invoices/:id', to: 'admin_invoices#show'
   patch '/admin/invoices/:id', to: 'admin_invoices#update'
 
-  resources :merchants, except: %i[destroy create] do
-    resources :bulk_discounts, controller: :merchant_bulk_discounts
-  end
-
   # resources :merchants, module: :bulk_discounts, as: :merchant_bulk_discounts
 
   # get '/merchants/:id/bulk_discounts/new', to: 'merchant_bulk_discounts#new'
@@ -37,4 +33,8 @@ Rails.application.routes.draw do
   get '/merchants/:id/items/:item_id', to: 'merchant_items#show'
   get '/merchants/:id/items/:item_id/edit', to: 'merchant_items#edit'
   patch '/merchants/:id/items/:item_id', to: 'merchant_items#update'
+
+  resources :merchants, except: %i[destroy create] do
+    resources :bulk_discounts, controller: :merchant_bulk_discounts
+  end
 end
