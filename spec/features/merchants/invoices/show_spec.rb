@@ -73,7 +73,7 @@ RSpec.describe 'Merchant Invoice Show Page' do
       bd2 = @merch1.bulk_discounts.create(percentage_discount: 5, quantity: 10)
 
       visit "/merchants/#{@merch1.id}/invoices/#{@invoice1.id}"
-
+      save_and_open_page
       within "#invoice-item-#{@item2.id}" do
         click_link('5% Discount')
       end
