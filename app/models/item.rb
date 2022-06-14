@@ -19,13 +19,13 @@ class Item < ApplicationRecord
 
   def item_best_day
     invoices.joins(:transactions)
-            .where(transactions: {result: 0})
-            .group(:id) #always goes to refer to the original table / thing
-            .select("invoices.*, sum(invoice_items.quantity) as sales")
+            .where(transactions: { result: 0 })
+            .group(:id) # always goes to refer to the original table / thing
+            .select('invoices.*, sum(invoice_items.quantity) as sales')
             .order(sales: :desc)
             .first.updated_at
   end
-  
+
   def invoice_time
     invoices.order(created_at: :asc)
   end
