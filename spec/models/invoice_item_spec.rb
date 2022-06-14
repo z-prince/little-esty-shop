@@ -51,7 +51,7 @@ RSpec.describe InvoiceItem do
         bd2 = @merch1.bulk_discounts.create(percentage_discount: 20, quantity: 30)
         bd3 = @merch1.bulk_discounts.create(percentage_discount: 30, quantity: 40)
 
-        expect(@item8.invoice_items.last.best_discount).to eq(bd2)
+        expect(@item1.invoice_items.last.best_discount).to eq(bd2)
       end
     end
   end
