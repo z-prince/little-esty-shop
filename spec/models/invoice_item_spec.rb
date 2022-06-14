@@ -65,5 +65,16 @@ RSpec.describe InvoiceItem do
         expect(@item1.invoice_items.last.discounted_revenue).to eq(240_000)
       end
     end
+
+    describe '#total_revenue' do
+      it 'finds the total revenue for the invoice_item' do
+        InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice1.id, quantity: 30, unit_price: 10_000, status: 0)
+        bd1 = @merch1.bulk_discounts.create(percentage_discount: 10, quantity: 20)
+        bd2 = @merch1.bulk_discounts.create(percentage_discount: 20, quantity: 30)
+        bd3 = @merch1.bulk_discounts.create(percentage_discount: 30, quantity: 40)
+
+        expect(@item1.invoice_items.last.total_revenue).to eq(300_000)
+      end
+    end
   end
 end
