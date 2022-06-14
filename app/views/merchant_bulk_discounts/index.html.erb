@@ -20,11 +20,14 @@
 
 <br>
 
-<% @holidays.next_three_holidays do |holiday| %>
-  <ul>
-    Name: <%= holiday.name %>
-    Date: <%= holiday.date %>
-  </ul>
+<h3>Upcoming Holidays</h3>
+
 <br>
+
+<% @holidays.next_three_holidays.each do |holiday| %>
+  <ul>
+    <li><h4>Name: </h4><%= holiday.name %></li>
+    <h4>Date: </h4><%= holiday.date %>
+  </ul>
 <% end %>
 
