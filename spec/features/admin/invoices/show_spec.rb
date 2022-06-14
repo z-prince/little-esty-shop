@@ -25,10 +25,9 @@ RSpec.describe 'Admin Invoice Show' do
 
   it 'displays invoice information including id, status, customer and created at' do
     visit("/admin/invoices/#{@inv1.id}")
-    save_and_open_page
     expect(page).to have_content("#{@inv1.id}")
     expect(page).to have_content("#{@inv1.status}")
-    expect(page).to have_content(@inv1.created_at.strftime('%A, %B%e, %Y'))
+    expect(page).to have_content(@inv1.created_at.strftime('%A, %B %e, %Y'))
     expect(page).to have_content('Mark Ruffalo')
   end
 
