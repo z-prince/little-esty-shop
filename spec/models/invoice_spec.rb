@@ -64,6 +64,18 @@ RSpec.describe Invoice do
         expect(@inv1.invoice_revenue).to eq(502_000)
       end
     end
+
+    describe '#discounted_invoice_revenue' do
+      it 'calculates total discounted revenue of an invoice' do
+        bd1 = @merch1.bulk_discounts.create(percentage_discount: 10, quantity: 20)
+        bd2 = @merch1.bulk_discounts.create(percentage_discount: 20, quantity: 30)
+        bd3 = @merch1.bulk_discounts.create(percentage_discount: 30, quantity: 40)
+        @ii4 = InvoiceItem.create!(item_id: @item2.id.to_s, invoice_id: @inv1.id.to_s, quantity: 1,
+                                   unit_price: 2000, status: 1)
+
+        expect(@inv1.invoice_discounted_revenue).to eq(352_000)
+      end
+    end
   end
 
   describe 'class methods' do
