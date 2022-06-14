@@ -19,7 +19,15 @@ class InvoiceItem < ApplicationRecord
                   .first
   end
 
+  def total_revenue
+    (quantity * unit_price)
+  end
+
   def discounted_revenue
-    (1 - best_discount.percentage_discount.to_f / 100) * (quantity * unit_price)
+    if best_discount
+      (1 - best_discount.percentage_discount.to_f / 100) * (quantity * unit_price)
+    else
+      total_revenue
+    end
   end
 end
